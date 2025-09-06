@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row mt-5">
+    <div class="col-md-3">
+        <div class="card p-3 mb-3" style="background-color: #f8f9fa;">
+            <h5>{{ t('buyer_welcome') }}, {{ current_user.id }}!</h5>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">{{ t('services') }}</li>
+                <li class="list-group-item">{{ t('about') }}</li>
+                <li class="list-group-item">{{ t('contact') }}</li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-md-9">
+        <div class="card p-4 mb-4" style="background-color: #e4f1f3;">
+            <div class="text-center mb-4">
+                <img src="{{ url_for('static', filename='ahg_logo.jpg') }}" alt="AHG Logo" class="img-fluid" style="max-height: 150px;">
+                <h3 class="mt-3">{{ t('buyer_company_name') }}</h3>
+            </div>
+            <p>{{ t('buyer_description') }}</p>
+            <div id="imageCarousel" class="carousel slide mb-4" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="{{ url_for('static', filename='ahg_product1.jpg') }}" class="d-block w-100" alt="Product 1">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h5>{{ t('exclusive_image1_caption') }}</h5>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="{{ url_for('static', filename='ahg_product2.jpg') }}" class="d-block w-100" alt="Product 2">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h5>{{ t('exclusive_image2_caption') }}</h5>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="{{ url_for('static', filename='ahg_product3.jpg') }}" class="d-block w-100" alt="Product 3">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h5>{{ t('exclusive_image3_caption') }}</h5>
+                        </div>
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#imageCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#imageCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+            <div class="row text-center mb-4">
+                <div class="col-md-4">
+                    <div class="card p-3 stats-card">
+                        <h2 id="productsCount">0</h2>
+                        <p>{{ t('products_stat') }}</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card p-3 stats-card">
+                        <h2 id="yearsCount">0</h2>
+                        <p>{{ t('years_stat') }}</p>
+                    </div>
+                </div>
+            </div>
+            <p>{{ t('buyer_intro_text') }}</p>
+            <a href="{{ url_for('index') }}" class="btn btn-success btn-lg">{{ t('start_calculating') }}</a>
+        </div>
+        <div class="card p-3" style="background-color: #889eb4;">
+            <h5>{{ t('contact') }}</h5>
+            <p>{{ t('buyer_contact_text') }}</p>
+        </div>
+    </div>
+</div>
+<div class="text-end mt-3">
+    <a href="{{ url_for('logout') }}" class="btn btn-outline-danger">{{ t('logout') }}</a>
+</div>
+<style>
+    body {
+        background: linear-gradient(135deg, #e9f7ef 0%, #839db6 100%);
+    }
+    .topbar {
+        background-color: #6ca728;
+    }
+    .card {
+        border-color: #6ca728;
+    }
+    .btn-success {
+        background-color: #6ca728;
+        border-color: #6ca728;
+    }
+    .carousel-item img {
+        height: 300px;
+        object-fit: cover;
+    }
+    .stats-card {
+        background-color: #ffffff;
+        border: 1px solid #6ca728;
+        transition: transform 0.3s;
+    }
+    .stats-card:hover {
+        transform: scale(1.05);
+    }
+    .stats-card h2 {
+        color: #6ca728;
+    }
+</style>
+<script>
+    function animateCount(id, end) {
+        let count = 0;
+        const interval = setInterval(() => {
+            count += Math.ceil(end / 50);
+            if (count >= end) { count = end; clearInterval(interval); }
+            document.getElementById(id).textContent = (id === 'productsCount' , 'yearsCount' ? count + '+' : count);
+        }, 20);
+    }
+    animateCount('productsCount', 400);
+    animateCount('yearsCount', 5); 
+</script>
+{% endblock %}

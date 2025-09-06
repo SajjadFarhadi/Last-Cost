@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row justify-content-center mt-5">
+    <div class="col-md-8">
+        <div class="card p-4 shadow-sm">
+            <h4 class="mb-3">{{ t('calc_result') }}</h4>
+            <p><strong>{{ t('part_name') }}:</strong> {{ part_name }}</p>
+            <p><strong>{{ t('material') }}:</strong> {{ material }}</p>
+            <p><strong>{{ t('customer') }}:</strong> {{ customer }}</p>
+            <h5 class="mt-3"><strong>{{ t('total_cost') }}:</strong> <span id="total-cost">0</span></h5>
+            <script>
+            const total = {{ total_cost }};
+            let count = 0;
+            const interval = setInterval(() => {
+                count += Math.ceil(total / 20);
+                if (count >= total) { count = total; clearInterval(interval); }
+                document.getElementById('total-cost').textContent = count;
+            }, 50);
+            </script>
+            <hr>
+            <h5 class="mb-3">{{ t('data_table') }}</h5>
+            <div class="table-responsive">
+                {{ table | safe }}
+            </div>
+        </div>
+    </div>
+</div>
+<div class="text-end mt-3">
+    <a href="{{ url_for('logout') }}" class="btn btn-outline-danger">{{ t('logout') }}</a>
+</div>
+{% endblock %}
